@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI Calculator with Gender</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to left , rgb(54, 54, 227),rgb(14, 14, 229));
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      border: 2px solid #121212;
+      border-radius: 10px;
+      margin-top:  50px;
+      box-shadow: 2px 2px  grey;
+      color: beige;
+    }
+    h2 {
+      text-align: center;
+      color: #f5f6f7;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 2px solid black;
+      border-radius: 10px;
+      color: brown;
+    }
+    button {
+        padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #101010;
+      color: #f5f6f7;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2d2de5;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #eee8e8;
+    }
+     
+    .d {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 400px;
+      margin: 0 auto;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .d:hover {
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+   <div class="d">
+  <h2>BMI Calculator</h2>
+  <hr style="border: 2px solid black;border-radius: 50px;">
+
+  <label for="gender">Gender:</label>
+  <select title="Kindly Choose Gender" id="gender">
+    <option value="">Select Gender</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Others">Others</option>
+  </select><br><br><br>
+
+  
+  <input type="number" id="weight" title="Enter Weight" placeholder="Enter Weight (kg)" required min="0" step="0.1"><br><br>
+
+  <input type="number" id="height" title="Enter Height" placeholder="Enter Height (m)" required min="0" step="0.01"><br>
+
+  <hr style="border: 2px solid black;border-radius: 50px;">
+
+  <button onclick="calculateBMI()">Calculate BMI</button>
+  <hr style="border: 1px solid black;border-radius: 50px;">
+
+  <p id="result"></p>
+   </div>
+
+  <script>
+    function calculateBMI() {
+      const gender = document.getElementById("gender").value;
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const result = document.getElementById("result");
+
+      if (!gender || isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+        result.innerText = "Please Enter Valid Gender, Weight and Height.";
+        return;
+      }
+
+      const bmi = weight / (height * height);
+      let category = "";
+
+      if (bmi < 18.5) {
+        category = "Underweight";
+      } else if (bmi < 25) {
+        category = "Normal weight";
+      } else if (bmi < 30) {
+        category = "Overweight";
+      } else {
+        category = "Obese";
+      }
+
+      // Optional: gender-specific advice or message
+      let message = "";
+      if (gender === "male") {
+        message = "For men, a BMI between 18.5 and 24.9 is considered healthy.";
+      } else if (gender === "female") {
+        message = "For women, a BMI between 18.5 and 24.9 is considered healthy.";
+      }
+
+      result.innerText = `Your BMI is ${bmi.toFixed(2)}.\nCategory: ${category}\n${message}`;
+    }
+  </script>
+
+</body>
+</html>
